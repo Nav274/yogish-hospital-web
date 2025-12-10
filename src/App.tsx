@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import PatientInfo from "./pages/PatientInfo";
 import KneeReplacement from "./pages/KneeReplacement";
 import HipReplacement from "./pages/HipReplacement";
+import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/services/knee-replacement" element={<KneeReplacement />} />
           <Route path="/services/hip-replacement" element={<HipReplacement />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
