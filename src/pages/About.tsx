@@ -12,6 +12,7 @@ import {
   ArrowRight,
   CheckCircle
 } from "lucide-react";
+import drYogishPhoto from "@/assets/dr-yogish.jpg";
 
 const qualifications = [
   "MBBS from Bangalore Medical College",
@@ -76,24 +77,25 @@ const About = () => {
             
             <div className="relative">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-card to-muted border border-border overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-6 p-8">
-                    <div className="w-40 h-40 mx-auto rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
-                      <span className="text-5xl font-bold gradient-text">Dr.</span>
+                <img 
+                  src={drYogishPhoto} 
+                  alt="Dr. Yogish Vijaya Kumar - Senior Orthopaedic Surgeon"
+                  className="w-full h-full object-cover object-top"
+                />
+                {/* Stats overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                  <div className="flex justify-center gap-8">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-primary">15+</p>
+                      <p className="text-xs text-muted-foreground">Years Experience</p>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold">Yogish Vijaya Kumar</h3>
-                      <p className="text-muted-foreground">MS, FRCS (Ortho)</p>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-secondary">5000+</p>
+                      <p className="text-xs text-muted-foreground">Surgeries</p>
                     </div>
-                    <div className="flex justify-center gap-4">
-                      <div className="text-center">
-                        <p className="text-2xl font-bold text-primary">15+</p>
-                        <p className="text-xs text-muted-foreground">Years</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl font-bold text-secondary">5000+</p>
-                        <p className="text-xs text-muted-foreground">Surgeries</p>
-                      </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-primary">98%</p>
+                      <p className="text-xs text-muted-foreground">Success Rate</p>
                     </div>
                   </div>
                 </div>

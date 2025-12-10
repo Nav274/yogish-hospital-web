@@ -21,6 +21,7 @@ const Header = () => {
         { name: "Knee Replacement", path: "/services/knee-replacement" },
       ]
     },
+    { name: "Gallery", path: "/gallery" },
     { name: "Patient Info", path: "/patient-info" },
     { name: "Contact", path: "/contact" },
   ];

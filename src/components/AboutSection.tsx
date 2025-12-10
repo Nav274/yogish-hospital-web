@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, GraduationCap, Building2, Award } from "lucide-react";
+import drYogishPhoto from "@/assets/dr-yogish.jpg";
 
 const credentials = [
   {
@@ -25,27 +26,26 @@ const AboutSection = () => {
     <section className="py-24 bg-card/50">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Image/Visual */}
+          {/* Left - Doctor Photo */}
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-muted to-card border border-border overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4 p-8">
-                  <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
-                    <span className="text-4xl font-bold gradient-text">Dr.</span>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold">Yogish Vijaya Kumar</h3>
-                    <p className="text-muted-foreground">Orthopaedic Surgeon</p>
-                  </div>
-                  <div className="badge-primary">
-                    15+ Years of Excellence
-                  </div>
+              <img 
+                src={drYogishPhoto} 
+                alt="Dr. Yogish Vijaya Kumar - Orthopaedic Surgeon"
+                className="w-full h-full object-cover object-top"
+              />
+              {/* Overlay with info */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                <h3 className="text-2xl font-bold text-foreground">Dr. Yogish V.K.</h3>
+                <p className="text-muted-foreground">Senior Orthopaedic Surgeon</p>
+                <div className="badge-primary mt-2 inline-flex">
+                  15+ Years of Excellence
                 </div>
               </div>
               
               {/* Decorative elements */}
               <div className="absolute top-4 left-4 w-20 h-20 rounded-xl bg-secondary/10 backdrop-blur-sm" />
-              <div className="absolute bottom-4 right-4 w-20 h-20 rounded-xl bg-primary/10 backdrop-blur-sm" />
+              <div className="absolute top-4 right-4 w-20 h-20 rounded-xl bg-primary/10 backdrop-blur-sm" />
             </div>
           </div>
 
