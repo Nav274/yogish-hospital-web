@@ -118,7 +118,7 @@ const KneeReplacement = () => {
         </section>
 
         {/* Eligibility */}
-        <section className="py-20 bg-card/50">
+        <section className="py-20 bg-section-2 section-glow">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -153,7 +153,7 @@ const KneeReplacement = () => {
         </section>
 
         {/* How It Works */}
-        <section className="py-20">
+        <section className="py-20 bg-section-3 section-glow section-glow-primary">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
@@ -184,7 +184,7 @@ const KneeReplacement = () => {
         </section>
 
         {/* Benefits */}
-        <section className="py-20 bg-card/50">
+        <section className="py-20 bg-section-4 section-glow">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
@@ -215,7 +215,7 @@ const KneeReplacement = () => {
         </section>
 
         {/* Recovery Timeline */}
-        <section className="py-20">
+        <section className="py-20 bg-section-2 section-glow section-glow-primary">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">

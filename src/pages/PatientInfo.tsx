@@ -208,7 +208,7 @@ const PatientInfo = () => {
         </section>
 
         {/* FAQs */}
-        <section className="py-20 bg-card/50">
+        <section className="py-20 bg-section-2 section-glow">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
@@ -246,7 +246,7 @@ const PatientInfo = () => {
         </section>
 
         {/* Recovery Timeline */}
-        <section id="timeline" className="py-20">
+        <section id="timeline" className="py-20 bg-section-3 section-glow section-glow-primary">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
