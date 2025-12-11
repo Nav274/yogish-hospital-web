@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedCard } from "@/components/AnimatedCard";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -181,26 +182,27 @@ const PatientInfo = () => {
           
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {resources.map((resource, i) => (
-              <a
-                key={i}
-                href={resource.link}
-                className="group card-glass p-6 hover:border-secondary/50 transition-colors"
-              >
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <resource.icon className="w-6 h-6 text-secondary" />
+              <AnimatedCard key={i} delay={i * 100}>
+                <a
+                  href={resource.link}
+                  className="group card-glass p-6 hover:border-secondary/50 transition-colors block h-full"
+                >
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <resource.icon className="w-6 h-6 text-secondary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-1 group-hover:text-secondary transition-colors">
+                        {resource.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">{resource.description}</p>
+                      <p className="text-sm text-primary mt-2 flex items-center gap-1">
+                        View resource <ArrowRight className="w-4 h-4" />
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-1 group-hover:text-secondary transition-colors">
-                      {resource.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">{resource.description}</p>
-                    <p className="text-sm text-primary mt-2 flex items-center gap-1">
-                      View resource <ArrowRight className="w-4 h-4" />
-                    </p>
-                  </div>
-                </div>
-              </a>
+                </a>
+              </AnimatedCard>
             ))}
           </div>
         </section>
@@ -263,35 +265,37 @@ const PatientInfo = () => {
               <div className="absolute left-[23px] top-0 bottom-0 w-0.5 bg-border" />
               
               {timeline.map((stage, i) => (
-                <div key={i} className="relative pl-16 pb-12 last:pb-0">
-                  {/* Timeline dot */}
-                  <div className="absolute left-0 w-12 h-12 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center border-4 border-background">
-                    <Activity className="w-5 h-5 text-secondary" />
-                  </div>
-                  
-                  <div className="card-glass p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="badge-secondary text-xs">{stage.period}</span>
-                      <h3 className="text-lg font-semibold">{stage.title}</h3>
+                <AnimatedCard key={i} delay={i * 100}>
+                  <div className="relative pl-16 pb-12 last:pb-0">
+                    {/* Timeline dot */}
+                    <div className="absolute left-0 w-12 h-12 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center border-4 border-background">
+                      <Activity className="w-5 h-5 text-secondary" />
                     </div>
                     
-                    <ul className="space-y-2 mb-4">
-                      {stage.items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <CheckCircle className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className="p-3 rounded-lg bg-secondary/10 border-l-2 border-secondary">
-                      <p className="text-sm">
-                        <span className="text-secondary font-medium">Tip:</span>{" "}
-                        <span className="text-muted-foreground">{stage.tip}</span>
-                      </p>
+                    <div className="card-glass p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="badge-secondary text-xs">{stage.period}</span>
+                        <h3 className="text-lg font-semibold">{stage.title}</h3>
+                      </div>
+                      
+                      <ul className="space-y-2 mb-4">
+                        {stage.items.map((item, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <CheckCircle className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <div className="p-3 rounded-lg bg-secondary/10 border-l-2 border-secondary">
+                        <p className="text-sm">
+                          <span className="text-secondary font-medium">Tip:</span>{" "}
+                          <span className="text-muted-foreground">{stage.tip}</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
           </div>

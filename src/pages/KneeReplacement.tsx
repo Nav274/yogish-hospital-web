@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedCard } from "@/components/AnimatedCard";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -168,13 +169,15 @@ const KneeReplacement = () => {
             
             <div className="grid md:grid-cols-3 gap-6">
               {howItWorks.map((item, i) => (
-                <div key={i} className="card-glass p-8 text-center">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mx-auto mb-6">
-                    <item.icon className="w-8 h-8 text-secondary" />
+                <AnimatedCard key={i} delay={i * 100}>
+                  <div className="card-glass p-8 text-center h-full">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mx-auto mb-6">
+                      <item.icon className="w-8 h-8 text-secondary" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.desc}</p>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.desc}</p>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
           </div>
@@ -197,13 +200,15 @@ const KneeReplacement = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {benefits.map((item, i) => (
-                <div key={i} className="card-glass p-6">
-                  <div className="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center mb-4">
-                    <CheckCircle className="w-6 h-6 text-secondary" />
+                <AnimatedCard key={i} delay={i * 100}>
+                  <div className="card-glass p-6 h-full">
+                    <div className="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center mb-4">
+                      <CheckCircle className="w-6 h-6 text-secondary" />
+                    </div>
+                    <h3 className="font-semibold mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </div>
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
           </div>
@@ -225,13 +230,15 @@ const KneeReplacement = () => {
             
             <div className="max-w-2xl mx-auto space-y-4">
               {timeline.map((item, i) => (
-                <div key={i} className="card-glass p-5 flex items-center gap-4">
-                  <div className="badge-secondary text-xs flex-shrink-0">
-                    <Clock className="w-3 h-3" />
-                    {item.period}
+                <AnimatedCard key={i} delay={i * 80}>
+                  <div className="card-glass p-5 flex items-center gap-4">
+                    <div className="badge-secondary text-xs flex-shrink-0">
+                      <Clock className="w-3 h-3" />
+                      {item.period}
+                    </div>
+                    <p className="text-muted-foreground">{item.desc}</p>
                   </div>
-                  <p className="text-muted-foreground">{item.desc}</p>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
           </div>

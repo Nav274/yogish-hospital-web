@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedCard } from "@/components/AnimatedCard";
 import { Camera, Building2, Stethoscope, Activity } from "lucide-react";
 
 const galleryCategories = [
@@ -72,27 +73,28 @@ const Gallery = () => {
               {/* Image Grid */}
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {category.images.map((image, imgIndex) => (
-                  <div 
-                    key={imgIndex}
-                    className="group card-glass overflow-hidden hover:border-secondary/50 transition-all duration-300"
-                  >
-                    {/* Placeholder Image */}
-                    <div className="aspect-[4/3] bg-gradient-to-br from-muted to-card flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-primary/5" />
-                      <div className="relative z-10 text-center p-4">
-                        <category.icon className="w-12 h-12 text-secondary/40 mx-auto mb-2" />
-                        <p className="text-xs text-muted-foreground">Image Coming Soon</p>
+                  <AnimatedCard key={imgIndex} delay={imgIndex * 100}>
+                    <div 
+                      className="group card-glass overflow-hidden hover:border-secondary/50 transition-all duration-300 h-full"
+                    >
+                      {/* Placeholder Image */}
+                      <div className="aspect-[4/3] bg-gradient-to-br from-muted to-card flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-primary/5" />
+                        <div className="relative z-10 text-center p-4">
+                          <category.icon className="w-12 h-12 text-secondary/40 mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">Image Coming Soon</p>
+                        </div>
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Content */}
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{image.title}</h3>
+                        <p className="text-sm text-muted-foreground">{image.desc}</p>
+                      </div>
                     </div>
-                    
-                    {/* Content */}
-                    <div className="p-4">
-                      <h3 className="font-semibold text-foreground mb-1">{image.title}</h3>
-                      <p className="text-sm text-muted-foreground">{image.desc}</p>
-                    </div>
-                  </div>
+                  </AnimatedCard>
                 ))}
               </div>
             </div>
