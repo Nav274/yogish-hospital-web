@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle } from "lucide-react";
+import { AnimatedCard } from "./AnimatedCard";
 
 const faqs = [
   {
@@ -63,21 +64,22 @@ const FAQSection = () => {
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i}`}
-                className="card-glass px-6 border-border/50 data-[state=open]:border-secondary/50 transition-colors"
-              >
-                <AccordionTrigger className="text-left hover:no-underline py-5">
-                  <div className="flex items-center gap-3">
-                    <HelpCircle className="w-5 h-5 text-secondary flex-shrink-0" />
-                    <span className="font-medium">{faq.question}</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 pl-8">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <AnimatedCard key={i} delay={i * 50}>
+                <AccordionItem
+                  value={`item-${i}`}
+                  className="card-glass px-6 border-border/50 data-[state=open]:border-secondary/50 transition-colors"
+                >
+                  <AccordionTrigger className="text-left hover:no-underline py-5">
+                    <div className="flex items-center gap-3">
+                      <HelpCircle className="w-5 h-5 text-secondary flex-shrink-0" />
+                      <span className="font-medium">{faq.question}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 pl-8">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </AnimatedCard>
             ))}
           </Accordion>
         </div>
