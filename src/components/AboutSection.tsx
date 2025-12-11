@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, GraduationCap, Building2, Award } from "lucide-react";
 import drYogishPhoto from "@/assets/dr-yogish.jpg";
+import { AnimatedCard } from "./AnimatedCard";
 
 const credentials = [
   {
@@ -27,27 +28,29 @@ const AboutSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left - Doctor Photo */}
-          <div className="relative">
-            <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-muted to-card border border-border overflow-hidden relative">
-              <img 
-                src={drYogishPhoto} 
-                alt="Dr. Yogish Vijaya Kumar - Orthopaedic Surgeon"
-                className="w-full h-full object-cover object-top"
-              />
-              {/* Overlay with info */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                <h3 className="text-2xl font-bold text-foreground">Dr. Yogish V.K.</h3>
-                <p className="text-muted-foreground">Senior Orthopaedic Surgeon</p>
-                <div className="badge-primary mt-2 inline-flex">
-                  15+ Years of Excellence
+          <AnimatedCard>
+            <div className="relative">
+              <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-muted to-card border border-border overflow-hidden relative">
+                <img 
+                  src={drYogishPhoto} 
+                  alt="Dr. Yogish Vijaya Kumar - Orthopaedic Surgeon"
+                  className="w-full h-full object-cover object-top"
+                />
+                {/* Overlay with info */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                  <h3 className="text-2xl font-bold text-foreground">Dr. Yogish V.K.</h3>
+                  <p className="text-muted-foreground">Senior Orthopaedic Surgeon</p>
+                  <div className="badge-primary mt-2 inline-flex">
+                    15+ Years of Excellence
+                  </div>
                 </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute top-4 left-4 w-20 h-20 rounded-xl bg-secondary/10 backdrop-blur-sm" />
+                <div className="absolute top-4 right-4 w-20 h-20 rounded-xl bg-primary/10 backdrop-blur-sm" />
               </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute top-4 left-4 w-20 h-20 rounded-xl bg-secondary/10 backdrop-blur-sm" />
-              <div className="absolute top-4 right-4 w-20 h-20 rounded-xl bg-primary/10 backdrop-blur-sm" />
             </div>
-          </div>
+          </AnimatedCard>
 
           {/* Right - Content */}
           <div className="space-y-8">
@@ -71,21 +74,23 @@ const AboutSection = () => {
             {/* Credentials */}
             <div className="grid gap-4">
               {credentials.map((cred, i) => (
-                <div key={i} className="card-glass p-4 flex gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center flex-shrink-0">
-                    <cred.icon className="w-6 h-6 text-secondary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">{cred.title}</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {cred.items.map((item, j) => (
-                        <span key={j} className="text-sm text-muted-foreground">
-                          {item}{j < cred.items.length - 1 && " • "}
-                        </span>
-                      ))}
+                <AnimatedCard key={i} delay={i * 100}>
+                  <div className="card-glass p-4 flex gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center flex-shrink-0">
+                      <cred.icon className="w-6 h-6 text-secondary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-1">{cred.title}</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {cred.items.map((item, j) => (
+                          <span key={j} className="text-sm text-muted-foreground">
+                            {item}{j < cred.items.length - 1 && " • "}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Bone, Activity, Shield, Clock, Target, Heart } from "lucide-react";
+import { AnimatedCard } from "./AnimatedCard";
 
 const services = [
   {
@@ -48,38 +49,41 @@ const ServicesSection = () => {
         {/* Services Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {services.map((service, i) => (
-            <Link
-              key={i}
-              to={service.link}
-              className="group card-glass p-8 hover:border-primary/50 transition-all duration-300"
-            >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <service.icon className="w-7 h-7 text-secondary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {service.description}
-              </p>
-              <div className="flex items-center gap-2 text-primary font-medium">
-                Learn More
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
+            <AnimatedCard key={i} delay={i * 100}>
+              <Link
+                to={service.link}
+                className="block group card-glass p-8 hover:border-primary/50 transition-all duration-300 h-full"
+              >
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <service.icon className="w-7 h-7 text-secondary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+                <div className="flex items-center gap-2 text-primary font-medium">
+                  Learn More
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            </AnimatedCard>
           ))}
         </div>
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {benefits.map((benefit, i) => (
-            <div key={i} className="card-glass p-6 text-center group hover:border-secondary/50 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-colors">
-                <benefit.icon className="w-6 h-6 text-secondary" />
+            <AnimatedCard key={i} delay={i * 100}>
+              <div className="card-glass p-6 text-center group hover:border-secondary/50 transition-colors h-full">
+                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-colors">
+                  <benefit.icon className="w-6 h-6 text-secondary" />
+                </div>
+                <h4 className="font-semibold mb-1">{benefit.title}</h4>
+                <p className="text-sm text-muted-foreground">{benefit.desc}</p>
               </div>
-              <h4 className="font-semibold mb-1">{benefit.title}</h4>
-              <p className="text-sm text-muted-foreground">{benefit.desc}</p>
-            </div>
+            </AnimatedCard>
           ))}
         </div>
       </div>
