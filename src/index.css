@@ -36,12 +36,22 @@
 
     --radius: 0.75rem;
 
+    /* Section backgrounds */
+    --section-1: 220 30% 6%;
+    --section-2: 220 28% 8%;
+    --section-3: 220 26% 7%;
+    --section-4: 220 32% 9%;
+
     /* Custom tokens */
     --gradient-primary: linear-gradient(135deg, hsl(348 83% 57%), hsl(320 70% 50%));
     --gradient-secondary: linear-gradient(135deg, hsl(195 100% 42%), hsl(210 100% 50%));
     --gradient-card: linear-gradient(180deg, hsl(220 25% 12%), hsl(220 25% 8%));
     --glow-primary: 0 0 40px hsl(348 83% 57% / 0.3);
     --glow-secondary: 0 0 40px hsl(195 100% 42% / 0.3);
+
+    /* Section gradient glow (bottom blue glow effect) */
+    --section-glow: radial-gradient(ellipse 80% 50% at 50% 100%, hsl(195 100% 42% / 0.15), transparent);
+    --section-glow-primary: radial-gradient(ellipse 80% 50% at 50% 100%, hsl(348 83% 57% / 0.1), transparent);
 
     --sidebar-background: 220 25% 8%;
     --sidebar-foreground: 210 40% 98%;
@@ -105,6 +115,21 @@
 
   .glow-secondary {
     box-shadow: var(--glow-secondary);
+  }
+
+  /* Section with bottom glow effect */
+  .section-glow {
+    @apply relative;
+  }
+
+  .section-glow::after {
+    content: '';
+    @apply absolute inset-x-0 bottom-0 h-40 pointer-events-none;
+    background: var(--section-glow);
+  }
+
+  .section-glow-primary::after {
+    background: var(--section-glow-primary);
   }
 }
 

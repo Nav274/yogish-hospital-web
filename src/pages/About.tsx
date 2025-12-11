@@ -105,7 +105,7 @@ const About = () => {
         </section>
 
         {/* Qualifications */}
-        <section className="py-20 bg-card/50">
+        <section className="py-20 bg-section-2 section-glow">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
@@ -131,7 +131,7 @@ const About = () => {
         </section>
 
         {/* Hospital Affiliations */}
-        <section className="py-20">
+        <section className="py-20 bg-section-3 section-glow section-glow-primary">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="badge-secondary inline-flex mb-4">
@@ -156,7 +156,7 @@ const About = () => {
         </section>
 
         {/* Philosophy */}
-        <section className="py-20 bg-card/50">
+        <section className="py-20 bg-section-4 section-glow">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <div className="badge-secondary inline-flex mb-4">

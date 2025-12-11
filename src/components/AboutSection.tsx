@@ -24,7 +24,7 @@ const credentials = [
 
 const AboutSection = () => {
   return (
-    <section className="py-24 bg-card/50">
+    <section className="py-24 bg-section-3 section-glow section-glow-primary">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left - Doctor Photo */}

@@ -129,7 +129,7 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-24 overflow-hidden bg-section-4 section-glow">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">

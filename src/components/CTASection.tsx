@@ -4,7 +4,7 @@ import { ArrowRight, Phone, Calendar } from "lucide-react";
 
 const CTASection = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden bg-section-3">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
