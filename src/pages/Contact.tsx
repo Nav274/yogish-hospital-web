@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "@/components/Header";
+import { AnimatedCard } from "@/components/AnimatedCard";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -168,74 +169,76 @@ const Contact = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Contact Info */}
-              <div className="card-glass p-6 space-y-6">
-                <h3 className="text-lg font-semibold">Contact Information</h3>
-                
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-secondary" />
+              <AnimatedCard>
+                <div className="card-glass p-6 space-y-6">
+                  <h3 className="text-lg font-semibold">Contact Information</h3>
+                  
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Primary Phone</p>
+                      <a href="tel:+919480385533" className="text-muted-foreground hover:text-primary transition-colors">
+                        +91 94803 85533
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Primary Phone</p>
-                    <a href="tel:+919480385533" className="text-muted-foreground hover:text-primary transition-colors">
-                      +91 94803 85533
-                    </a>
+
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Email</p>
+                      <a href="mailto:yogishv@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                        yogishv@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Address</p>
+                      <p className="text-sm text-muted-foreground">
+                        Re-Flex Super Specialty Clinic, #301/C, 35th Cross, 9th Main, 4th Block, Jayanagar, Bengaluru – 560011
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Hours</p>
+                      <p className="text-sm text-muted-foreground">
+                        Daily: 5:00 PM – 8:00 PM at Re-Flex Clinic (see schedule below for hospital timings)
+                      </p>
+                    </div>
                   </div>
                 </div>
+              </AnimatedCard>
 
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <a href="mailto:yogishv@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      yogishv@gmail.com
-                    </a>
-                  </div>
+              <AnimatedCard delay={100}>
+                <div className="card-glass p-6 space-y-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-secondary" />
+                    Clinic Schedule
+                  </h3>
+                  
+                  {clinicSchedule.map((clinic, i) => (
+                    <div key={i} className="p-4 rounded-lg bg-muted/50 space-y-1">
+                      <p className="font-medium text-sm">{clinic.name}</p>
+                      <p className="text-xs text-muted-foreground">{clinic.schedule}</p>
+                      <p className="text-xs text-muted-foreground">Contact: {clinic.phone}</p>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Address</p>
-                    <p className="text-sm text-muted-foreground">
-                      Re-Flex Super Specialty Clinic, #301/C, 35th Cross, 9th Main, 4th Block, Jayanagar, Bengaluru – 560011
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Hours</p>
-                    <p className="text-sm text-muted-foreground">
-                      Daily: 5:00 PM – 8:00 PM at Re-Flex Clinic (see schedule below for hospital timings)
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Clinic Schedule */}
-              <div className="card-glass p-6 space-y-4">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-secondary" />
-                  Clinic Schedule
-                </h3>
-                
-                {clinicSchedule.map((clinic, i) => (
-                  <div key={i} className="p-4 rounded-lg bg-muted/50 space-y-1">
-                    <p className="font-medium text-sm">{clinic.name}</p>
-                    <p className="text-xs text-muted-foreground">{clinic.schedule}</p>
-                    <p className="text-xs text-muted-foreground">Contact: {clinic.phone}</p>
-                  </div>
-                ))}
-              </div>
+              </AnimatedCard>
             </div>
           </div>
         </div>

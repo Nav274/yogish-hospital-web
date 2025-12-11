@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedCard } from "@/components/AnimatedCard";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Activity, Bone, Shield, Clock, Target, Heart } from "lucide-react";
@@ -82,38 +83,40 @@ const Services = () => {
         <section className="container mx-auto px-4 mb-20">
           <div className="space-y-8">
             {services.map((service, i) => (
-              <div key={i} className="card-glass p-8 md:p-12">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  <div>
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mb-6">
-                      <service.icon className="w-8 h-8 text-secondary" />
+              <AnimatedCard key={i} delay={i * 150}>
+                <div className="card-glass p-8 md:p-12">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mb-6">
+                        <service.icon className="w-8 h-8 text-secondary" />
+                      </div>
+                      <h2 className="text-2xl md:text-3xl font-bold mb-4">{service.title}</h2>
+                      <p className="text-muted-foreground leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+                      <Button variant="hero" asChild>
+                        <Link to={service.link}>
+                          Learn More
+                          <ArrowRight className="w-5 h-5" />
+                        </Link>
+                      </Button>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">{service.title}</h2>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                    <Button variant="hero" asChild>
-                      <Link to={service.link}>
-                        Learn More
-                        <ArrowRight className="w-5 h-5" />
-                      </Link>
-                    </Button>
-                  </div>
-                  <div className="card-glass p-6">
-                    <h4 className="font-semibold mb-4">Key Benefits</h4>
-                    <ul className="space-y-3">
-                      {service.features.map((feature, j) => (
-                        <li key={j} className="flex items-center gap-3">
-                          <div className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                            <div className="w-2 h-2 rounded-full bg-secondary" />
-                          </div>
-                          <span className="text-muted-foreground">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="card-glass p-6">
+                      <h4 className="font-semibold mb-4">Key Benefits</h4>
+                      <ul className="space-y-3">
+                        {service.features.map((feature, j) => (
+                          <li key={j} className="flex items-center gap-3">
+                            <div className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                              <div className="w-2 h-2 rounded-full bg-secondary" />
+                            </div>
+                            <span className="text-muted-foreground">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </AnimatedCard>
             ))}
           </div>
         </section>
@@ -133,13 +136,15 @@ const Services = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {whyRobotic.map((item, i) => (
-                <div key={i} className="card-glass p-6 text-center">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mx-auto mb-4">
-                    <item.icon className="w-7 h-7 text-secondary" />
+                <AnimatedCard key={i} delay={i * 100}>
+                  <div className="card-glass p-6 text-center h-full">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center mx-auto mb-4">
+                      <item.icon className="w-7 h-7 text-secondary" />
+                    </div>
+                    <h3 className="font-semibold mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </div>
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
+                </AnimatedCard>
               ))}
             </div>
           </div>
