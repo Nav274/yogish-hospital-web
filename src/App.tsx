@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import BookConsultation from "./pages/BookConsultation";
 import PatientInfo from "./pages/PatientInfo";
 import KneeReplacement from "./pages/KneeReplacement";
 import HipReplacement from "./pages/HipReplacement";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/book-consultation" element={<BookConsultation />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
