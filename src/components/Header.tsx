@@ -27,17 +27,17 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-header shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center">
-              <Activity className="w-6 h-6 text-foreground" />
+            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
+              <Activity className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-foreground">DR. YOGISH V.K.</h1>
-              <p className="text-xs text-muted-foreground tracking-wider">CARE THAT MOVES YOU</p>
+              <h1 className="text-lg font-bold text-header-foreground">DR. YOGISH V.K.</h1>
+              <p className="text-xs text-header-foreground/70 tracking-wider">CARE THAT MOVES YOU</p>
             </div>
           </Link>
 
@@ -49,8 +49,8 @@ const Header = () => {
                   <button
                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.path) 
-                        ? "bg-muted text-foreground" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        ? "bg-white/15 text-white" 
+                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
                     }`}
                     onMouseEnter={() => setIsServicesOpen(true)}
                     onMouseLeave={() => setIsServicesOpen(false)}
@@ -63,8 +63,8 @@ const Header = () => {
                     to={item.path}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.path) 
-                        ? "bg-muted text-foreground" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        ? "bg-white/15 text-white" 
+                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {item.name}
@@ -74,7 +74,7 @@ const Header = () => {
                 {/* Dropdown */}
                 {item.children && (
                   <div 
-                    className={`absolute top-full left-0 mt-1 w-56 py-2 rounded-xl bg-card border border-border shadow-xl transition-all duration-200 ${
+                    className={`absolute top-full left-0 mt-1 w-56 py-2 rounded-xl bg-white border border-border shadow-xl transition-all duration-200 ${
                       isServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
                     }`}
                     onMouseEnter={() => setIsServicesOpen(true)}
@@ -84,7 +84,7 @@ const Header = () => {
                       <Link
                         key={child.name}
                         to={child.path}
-                        className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
                       >
                         {child.name}
                       </Link>
@@ -97,7 +97,7 @@ const Header = () => {
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:+919480385533" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="tel:+919480385533" className="flex items-center gap-2 text-sm text-header-foreground/80 hover:text-white transition-colors">
               <Phone className="w-4 h-4" />
               +91 94803 85533
             </a>
@@ -108,7 +108,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            className="lg:hidden p-2 rounded-lg text-header-foreground hover:bg-white/10 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -117,7 +117,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
+          <div className="lg:hidden py-4 border-t border-white/10">
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <div key={item.name}>
@@ -125,8 +125,8 @@ const Header = () => {
                     to={item.path}
                     className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.path) 
-                        ? "bg-muted text-foreground" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        ? "bg-white/15 text-white" 
+                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -138,7 +138,7 @@ const Header = () => {
                         <Link
                           key={child.name}
                           to={child.path}
-                          className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          className="block px-4 py-2 text-sm text-header-foreground/70 hover:text-white transition-colors"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {child.name}
