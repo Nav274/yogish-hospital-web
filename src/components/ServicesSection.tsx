@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Bone, Activity, Shield, Clock, Target, Heart } from "lucide-react";
+import { ArrowRight, Bone, Activity, Shield, Clock, Target, Heart, RefreshCw, Minimize2, HeartPulse } from "lucide-react";
 import { AnimatedCard } from "./AnimatedCard";
 
 const services = [
@@ -14,6 +14,24 @@ const services = [
     title: "Robotic Knee Replacement",
     description: "Advanced robotic technology for natural-feeling knee replacement with optimal alignment.",
     link: "/services/knee-replacement",
+  },
+  {
+    icon: RefreshCw,
+    title: "Revision Joint Surgery",
+    description: "Expert revision procedures for failed or worn joint replacements using specialized techniques.",
+    link: "/services/revision-surgery",
+  },
+  {
+    icon: Minimize2,
+    title: "Minimally Invasive Surgery",
+    description: "Smaller incisions, less pain, and faster recovery with advanced minimally invasive techniques.",
+    link: "/services/minimally-invasive",
+  },
+  {
+    icon: HeartPulse,
+    title: "Rehabilitation Care",
+    description: "Comprehensive pre and post-operative rehabilitation for optimal surgical outcomes.",
+    link: "/services/rehabilitation",
   },
 ];
 

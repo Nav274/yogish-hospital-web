@@ -11,6 +11,9 @@ import BookConsultation from "./pages/BookConsultation";
 import PatientInfo from "./pages/PatientInfo";
 import KneeReplacement from "./pages/KneeReplacement";
 import HipReplacement from "./pages/HipReplacement";
+import RevisionJointSurgery from "./pages/RevisionJointSurgery";
+import MinimallyInvasiveSurgery from "./pages/MinimallyInvasiveSurgery";
+import RehabilitationCare from "./pages/RehabilitationCare";
 import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/services/knee-replacement" element={<KneeReplacement />} />
           <Route path="/services/hip-replacement" element={<HipReplacement />} />
+          <Route path="/services/revision-surgery" element={<RevisionJointSurgery />} />
+          <Route path="/services/minimally-invasive" element={<MinimallyInvasiveSurgery />} />
+          <Route path="/services/rehabilitation" element={<RehabilitationCare />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/contact" element={<Contact />} />
