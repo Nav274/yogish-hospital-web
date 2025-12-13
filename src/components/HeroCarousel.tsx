@@ -1,186 +1,150 @@
-import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Activity, Award, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import drYogish from "../assets/dr-yogish.jpg";
 
-const slides = [
-  {
-    id: 1,
-    badge: "Robotic Joint Replacement Specialist",
-    title: "Advanced Hip & Knee",
-    highlight: "Replacement",
-    subtitle: "Surgery",
-    description: "Dr. Yogish Vijaya Kumar brings over 15 years of expertise in robotic-assisted joint replacement, helping patients regain mobility and live pain-free lives.",
-    icon: Activity,
-    cta: { text: "Schedule Consultation", link: "/contact" },
-  },
-  {
-    id: 2,
-    badge: "State-of-the-Art Facility",
-    title: "World-Class",
-    highlight: "Orthopedic",
-    subtitle: "Care",
-    description: "Our hospital is equipped with cutting-edge technology including robotic surgical systems, advanced imaging, and modern rehabilitation facilities for optimal patient outcomes.",
-    icon: Award,
-    cta: { text: "Explore Services", link: "/services" },
-  },
-  {
-    id: 3,
-    badge: "Patient-Centered Approach",
-    title: "Compassionate",
-    highlight: "Healthcare",
-    subtitle: "Excellence",
-    description: "We believe in personalized care tailored to each patient's needs. From consultation to recovery, our dedicated team ensures you receive the best possible treatment.",
-    icon: Heart,
-    cta: { text: "Meet Dr. Yogish", link: "/about" },
-  },
-];
+// Using existing image - upload your actual images (DR.-Yogish-vijaya.webp, Orthopaedic-Surgery.webp) to replace
+const images = [drYogish, drYogish];
+
+const SWIPE_THRESHOLD = 50;
 
 const HeroCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const startXRef = useRef<number | null>(null);
+  const deltaXRef = useRef(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const nextSlide = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prev) => (prev + 1) % images.length);
     setTimeout(() => setIsAnimating(false), 500);
   }, [isAnimating]);
 
   const prevSlide = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
     setTimeout(() => setIsAnimating(false), 500);
   }, [isAnimating]);
 
+  // autoplay
   useEffect(() => {
-    const interval = setInterval(nextSlide, 6000);
-    return () => clearInterval(interval);
-  }, [nextSlide]);
+    if (isPaused) return;
+    const t = setInterval(nextSlide, 6000);
+    return () => clearInterval(t);
+  }, [nextSlide, isPaused]);
 
-  const slide = slides[currentSlide];
-  const SlideIcon = slide.icon;
+  // keyboard nav
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prevSlide();
+      if (e.key === "ArrowRight") nextSlide();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [nextSlide, prevSlide]);
+
+  // Touch / Mouse handlers for swipe
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      startXRef.current = e.clientX;
+      deltaXRef.current = 0;
+      (e.target as Element).setPointerCapture?.(e.pointerId);
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (startXRef.current === null) return;
+      deltaXRef.current = e.clientX - startXRef.current;
+    };
+
+    const onPointerUp = () => {
+      if (startXRef.current === null) return;
+      const moved = deltaXRef.current;
+      startXRef.current = null;
+      deltaXRef.current = 0;
+
+      if (Math.abs(moved) > SWIPE_THRESHOLD) {
+        if (moved < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    };
+
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerup", onPointerUp);
+    el.addEventListener("pointercancel", onPointerUp);
+
+    return () => {
+      el.removeEventListener("pointerdown", onPointerDown);
+      el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerup", onPointerUp);
+      el.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [nextSlide, prevSlide]);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl transition-all duration-1000" />
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl transition-all duration-1000" />
+    <section
+      ref={containerRef}
+      className="relative w-full h-[calc(100vh-80px)] bg-section-1 flex items-center overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      aria-roledescription="carousel"
+    >
+      {/* Slides container */}
+      <div className="absolute inset-0">
+        {images.map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            alt={`Slide ${index + 1}`}
+            draggable={false}
+            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-out ${
+              index === currentSlide
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none"
+            }`}
+          />
+        ))}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div 
-            key={currentSlide}
-            className="space-y-8 animate-fade-in"
-          >
-            <div className="badge-secondary">
-              <SlideIcon className="w-4 h-4" />
-              {slide.badge}
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              {slide.title}{" "}
-              <span className="gradient-text">{slide.highlight}</span>{" "}
-              {slide.subtitle}
-            </h1>
-            
-            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              {slide.description}
-            </p>
+      {/* Prev / Next buttons */}
+      <button
+        onClick={prevSlide}
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-black/40 hover:bg-black/50 text-white p-3 md:left-8 transition pointer-events-auto"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
 
-            <div className="flex flex-wrap gap-4">
-              <Button variant="hero" size="lg" asChild>
-                <Link to={slide.cta.link}>
-                  {slide.cta.text}
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/services">
-                  View All Services
-                </Link>
-              </Button>
-            </div>
+      <button
+        onClick={nextSlide}
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-black/40 hover:bg-black/50 text-white p-3 md:right-8 transition pointer-events-auto"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
 
-            {/* Slide Indicators */}
-            <div className="flex items-center gap-4 pt-4">
-              <button
-                onClick={prevSlide}
-                className="p-2 rounded-full border border-border/50 hover:border-secondary/50 hover:bg-secondary/10 transition-colors"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5 text-muted-foreground" />
-              </button>
-              <div className="flex gap-2">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      if (!isAnimating) {
-                        setIsAnimating(true);
-                        setCurrentSlide(i);
-                        setTimeout(() => setIsAnimating(false), 500);
-                      }
-                    }}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      i === currentSlide 
-                        ? "w-8 bg-primary" 
-                        : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                    }`}
-                    aria-label={`Go to slide ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={nextSlide}
-                className="p-2 rounded-full border border-border/50 hover:border-secondary/50 hover:bg-secondary/10 transition-colors"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </button>
-            </div>
-          </div>
-
-          {/* Right Content - Visual */}
-          <div className="relative flex justify-center lg:justify-end">
-            <div className="relative w-80 h-80 lg:w-[450px] lg:h-[450px]">
-              {/* Main Circle */}
-              <div 
-                key={`visual-${currentSlide}`}
-                className="absolute inset-0 rounded-full bg-gradient-to-br from-card via-muted to-card border border-border/50 flex items-center justify-center animate-float"
-              >
-                <div className="text-center space-y-4 animate-fade-in">
-                  <div className="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center glow-secondary">
-                    <SlideIcon className="w-12 h-12 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-foreground">{slide.highlight}</p>
-                    <p className="text-muted-foreground">{slide.subtitle}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-xl card-glass p-4 flex items-center justify-center animate-float" style={{ animationDelay: "0.5s" }}>
-                <div className="text-center">
-                  <p className="text-lg font-bold text-primary">Hip</p>
-                  <p className="text-xs text-muted-foreground">Surgery</p>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-xl card-glass p-4 flex items-center justify-center animate-float" style={{ animationDelay: "1s" }}>
-                <div className="text-center">
-                  <p className="text-lg font-bold text-secondary">Knee</p>
-                  <p className="text-xs text-muted-foreground">Surgery</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Indicators */}
+      <div className="absolute z-30 left-1/2 -translate-x-1/2 bottom-8 flex items-center gap-3 pointer-events-auto">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentSlide(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+            className={`w-3 h-3 rounded-full transition-all ${
+              idx === currentSlide ? "bg-primary scale-125" : "bg-primary/50"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
