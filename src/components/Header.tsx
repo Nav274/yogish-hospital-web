@@ -11,6 +11,10 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
 
+  // mobile accordion control
+  const [mobileOpenMenu, setMobileOpenMenu] = useState<string | null>(null);
+  const [mobileOpenSubMenu, setMobileOpenSubMenu] = useState<string | null>(null);
+
   const location = useLocation();
   const isActive = (path?: string) => location.pathname === path;
 
@@ -22,7 +26,7 @@ const Header = () => {
       childrenofservices: [
         { name: "Robotic Hip Replacement", path: "/services/hip-replacement" },
         { name: "Robotic Knee Replacement", path: "/services/knee-replacement" },
-        { name: "Revision-Joint-Surgery", path: "/services/revision-joint-surgery" },
+        { name: "Revision Joint Surgery", path: "/services/revision-joint-surgery" },
         { name: "Minimally Invasive", path: "/services/minimally-invasive" },
         { name: "Pre-Post Rehab", path: "/services/pre-post-rehab" }
       ]
@@ -62,16 +66,31 @@ const Header = () => {
         },
         { name: "Joint Pain", path: "" },
         { name: "Deformity", path: "" },
-        { name: "PRP Therapy for Early Arthrities & Ligament Injuries" },
+        { name: "PRP Therapy for Early Arthrities & Ligament Injuries", path: "" },
         { name: "Bone Marrow Concentrate Injection for Osteonecrosis/AVN", path: "" },
         { name: "Bone Marrow Concentrate Injection for Cartilage Defects", path: "" },
-        { name: "Viscosupplementation for Early Osteoarthritis" }
+        { name: "Viscosupplementation for Early Osteoarthritis", path: "" }
       ]
     },
     { name: "Gallery", path: "/gallery" },
     { name: "Patient Info", path: "/patient-info" },
     { name: "Contact", path: "/contact" }
   ];
+
+  const toggleMobileMenu = (name: string) => {
+    setMobileOpenMenu(mobileOpenMenu === name ? null : name);
+    setMobileOpenSubMenu(null);
+  };
+
+  const toggleMobileSubMenu = (name: string) => {
+    setMobileOpenSubMenu(mobileOpenSubMenu === name ? null : name);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setMobileOpenMenu(null);
+    setMobileOpenSubMenu(null);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-header shadow-lg">
@@ -117,7 +136,7 @@ const Header = () => {
 
                 {/* Services dropdown */}
                 {item.childrenofservices && openMenu === item.name && (
-                  <div className="absolute top-full left-0  w-56 py-2 rounded-xl bg-white border border-border shadow-xl">
+                  <div className="absolute top-full left-0 w-56 py-2 rounded-xl bg-white border border-border shadow-xl">
                     {item.childrenofservices.map((child) => (
                       <Link
                         key={child.name}
@@ -132,7 +151,7 @@ const Header = () => {
 
                 {/* Orthopadic Treatment dropdown */}
                 {item.children && openMenu === item.name && (
-                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-white border hover:text-primary hover:bg-muted border-border shadow-xl">
+                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-white border border-border shadow-xl">
                     {item.children.map((child) => (
                       <div
                         key={child.name}
@@ -140,7 +159,7 @@ const Header = () => {
                         onMouseEnter={() => setOpenSubMenu(child.name)}
                         onMouseLeave={() => setOpenSubMenu(null)}
                       >
-                        <div className="flex items-center justify-between px-4 py-2 text-sm text-foreground/70 hover:text-primary hover:bg-muted">
+                        <div className="flex items-center justify-between px-4 py-2 text-sm text-foreground/70 hover:text-primary hover:bg-muted cursor-pointer">
                           {child.name}
                           {(child.children || child.childrenoforthopadictreatement) && (
                             <ChevronRight className="w-4 h-4" />
@@ -149,13 +168,12 @@ const Header = () => {
 
                         {(child.children || child.childrenoforthopadictreatement) &&
                           openSubMenu === child.name && (
-                            <div className="absolute top-0 left-full  w-64 py-2 rounded-xl bg-white border border-border shadow-xl">
-                              {(child.children ||
-                                child.childrenoforthopadictreatement).map((sub: any) => (
+                            <div className="absolute top-0 left-full w-64 py-2 rounded-xl bg-white border border-border shadow-xl">
+                              {(child.children || child.childrenoforthopadictreatement)?.map((sub: any) => (
                                 <Link
                                   key={sub.name}
-                                  to={sub.path}
-                                  className="block px-4 py-4 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
+                                  to={sub.path || "#"}
+                                  className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
                                 >
                                   {sub.name}
                                 </Link>
@@ -177,11 +195,11 @@ const Header = () => {
               +91 94803 85533
             </a>
             <Button variant="hero" asChild>
-              <Link to="/bookconsultation">Book Consultation</Link>
+              <Link to="/book-consultation">Book Consultation</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button (UNCHANGED) */}
+          {/* Mobile Menu Button */}
           <button
             className="lg:hidden p-2 rounded-lg text-header-foreground hover:bg-white/10"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -190,6 +208,125 @@ const Header = () => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="lg:hidden absolute top-20 left-0 right-0 bg-white border-t border-border shadow-xl max-h-[calc(100vh-5rem)] overflow-y-auto">
+          <nav className="py-4">
+            {navItems.map((item) => (
+              <div key={item.name}>
+                {item.childrenofservices || item.children ? (
+                  <>
+                    <button
+                      onClick={() => toggleMobileMenu(item.name)}
+                      className="w-full flex items-center justify-between px-6 py-3 text-foreground hover:bg-muted"
+                    >
+                      <span className="font-medium">{item.name}</span>
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform ${
+                          mobileOpenMenu === item.name ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Services Mobile Dropdown */}
+                    {item.childrenofservices && mobileOpenMenu === item.name && (
+                      <div className="bg-muted/50 py-2">
+                        {item.childrenofservices.map((child) => (
+                          <Link
+                            key={child.name}
+                            to={child.path}
+                            onClick={closeMenu}
+                            className="block px-10 py-2.5 text-sm text-foreground/80 hover:text-primary"
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Orthopadic Treatment Mobile Dropdown */}
+                    {item.children && mobileOpenMenu === item.name && (
+                      <div className="bg-muted/50 py-2">
+                        {item.children.map((child) => (
+                          <div key={child.name}>
+                            {child.children || child.childrenoforthopadictreatement ? (
+                              <>
+                                <button
+                                  onClick={() => toggleMobileSubMenu(child.name)}
+                                  className="w-full flex items-center justify-between px-10 py-2.5 text-sm text-foreground/80 hover:text-primary"
+                                >
+                                  <span>{child.name}</span>
+                                  <ChevronDown
+                                    className={`w-4 h-4 transition-transform ${
+                                      mobileOpenSubMenu === child.name ? "rotate-180" : ""
+                                    }`}
+                                  />
+                                </button>
+
+                                {mobileOpenSubMenu === child.name && (
+                                  <div className="bg-muted py-1">
+                                    {(child.children || child.childrenoforthopadictreatement)?.map((sub: any) => (
+                                      <Link
+                                        key={sub.name}
+                                        to={sub.path || "#"}
+                                        onClick={closeMenu}
+                                        className="block px-14 py-2 text-sm text-foreground/70 hover:text-primary"
+                                      >
+                                        {sub.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <Link
+                                to={child.path || "#"}
+                                onClick={closeMenu}
+                                className="block px-10 py-2.5 text-sm text-foreground/80 hover:text-primary"
+                              >
+                                {child.name}
+                              </Link>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    to={item.path!}
+                    onClick={closeMenu}
+                    className={`block px-6 py-3 font-medium ${
+                      isActive(item.path)
+                        ? "text-primary bg-muted"
+                        : "text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
+            ))}
+
+            {/* Mobile CTA */}
+            <div className="px-6 pt-4 mt-4 border-t border-border space-y-3">
+              <a
+                href="tel:+919480385533"
+                className="flex items-center gap-2 text-sm text-foreground/80 hover:text-primary"
+              >
+                <Phone className="w-4 h-4" />
+                +91 94803 85533
+              </a>
+              <Button variant="default" className="w-full" asChild>
+                <Link to="/book-consultation" onClick={closeMenu}>
+                  Book Consultation
+                </Link>
+              </Button>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
