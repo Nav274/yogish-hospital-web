@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import logo from "../assets/logo.png";
 import { Phone, Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 
 const Header = () => {
@@ -99,9 +98,9 @@ const Header = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="w-40 h-40 flex items-center">
-              <img src={logo} alt="logo" className="w-full object-cover" />
-            </div>
+            <span className="text-xl font-bold text-header-foreground">
+              Dr. Yogish
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
