@@ -1,93 +1,168 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, ChevronDown, Activity } from "lucide-react";
+import logo from "../assets/logo.png";
+import { Phone, Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  // desktop hover control
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+
+  const location = useLocation();
+  const isActive = (path?: string) => location.pathname === path;
 
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { 
-      name: "Services", 
-      path: "/services",
+    {
+      name: "Services",
+      childrenofservices: [
+        { name: "Robotic Hip Replacement", path: "/services/hip-replacement" },
+        { name: "Robotic Knee Replacement", path: "/services/knee-replacement" },
+        { name: "Revision-Joint-Surgery", path: "/services/revision-joint-surgery" },
+        { name: "Minimally Invasive", path: "/services/minimally-invasive" },
+        { name: "Pre-Post Rehab", path: "/services/pre-post-rehab" }
+      ]
+    },
+    {
+      name: "Orthopadic Treatment",
       children: [
-        { name: "Hip Replacement", path: "/services/hip-replacement" },
-        { name: "Knee Replacement", path: "/services/knee-replacement" },
+        { name: "Fracture Treatment", path: "" },
+        { name: "Sports Injury", path: "" },
+        {
+          name: "Back and Neck Pain",
+          path: "",
+          childrenoforthopadictreatement: [
+            { name: "Disc prolapse", path: "" },
+            { name: "Spondylosis", path: "" }
+          ]
+        },
+        {
+          name: "Geriatric Orthopadics",
+          path: "",
+          children: [
+            { name: "Arthritis", path: "" },
+            { name: "Gait Related Issues", path: "" },
+            { name: "Limb Length Issues", path: "" },
+            { name: "Osteoporosis", path: "" }
+          ]
+        },
+        { name: "PRP Therapy for Tennis/Golfers Elbow/Planter Fasciities", path: "" },
+        {
+          name: "Regenerative Orthopadics",
+          path: "",
+          children: [
+            { name: "OSSGROW for AVN femoral head", path: "" },
+            { name: "CARTIGROW for cattilage defects", path: "" },
+            { name: "STEMONE Injection for arthritis", path: "" }
+          ]
+        },
+        { name: "Joint Pain", path: "" },
+        { name: "Deformity", path: "" },
+        { name: "PRP Therapy for Early Arthrities & Ligament Injuries" },
+        { name: "Bone Marrow Concentrate Injection for Osteonecrosis/AVN", path: "" },
+        { name: "Bone Marrow Concentrate Injection for Cartilage Defects", path: "" },
+        { name: "Viscosupplementation for Early Osteoarthritis" }
       ]
     },
     { name: "Gallery", path: "/gallery" },
     { name: "Patient Info", path: "/patient-info" },
-    { name: "Contact", path: "/contact" },
+    { name: "Contact", path: "/contact" }
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-header shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-header shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
+
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
-              <Activity className="w-6 h-6 text-white" />
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-header-foreground">DR. YOGISH V.K.</h1>
-              <p className="text-xs text-header-foreground/70 tracking-wider">CARE THAT MOVES YOU</p>
+          <Link to="/" className="flex items-center">
+            <div className="w-40 h-40 flex items-center">
+              <img src={logo} alt="logo" className="w-full object-cover" />
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center">
             {navItems.map((item) => (
-              <div key={item.name} className="relative group">
-                {item.children ? (
-                  <button
-                    className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(item.path) 
-                        ? "bg-white/15 text-white" 
-                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
-                    }`}
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
-                  >
+              <div
+                key={item.name}
+                className="relative"
+                onMouseEnter={() => setOpenMenu(item.name)}
+                onMouseLeave={() => {
+                  setOpenMenu(null);
+                  setOpenSubMenu(null);
+                }}
+              >
+                {item.childrenofservices || item.children ? (
+                  <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-header-foreground/80 hover:text-white hover:bg-white/10">
                     {item.name}
                     <ChevronDown className="w-4 h-4" />
                   </button>
                 ) : (
                   <Link
-                    to={item.path}
+                    to={item.path!}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(item.path) 
-                        ? "bg-white/15 text-white" 
+                      isActive(item.path)
+                        ? "bg-white/15 text-white"
                         : "text-header-foreground/80 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {item.name}
                   </Link>
                 )}
-                
-                {/* Dropdown */}
-                {item.children && (
-                  <div 
-                    className={`absolute top-full left-0 mt-1 w-56 py-2 rounded-xl bg-white border border-border shadow-xl transition-all duration-200 ${
-                      isServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
-                    }`}
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
-                  >
-                    {item.children.map((child) => (
+
+                {/* Services dropdown */}
+                {item.childrenofservices && openMenu === item.name && (
+                  <div className="absolute top-full left-0  w-56 py-2 rounded-xl bg-white border border-border shadow-xl">
+                    {item.childrenofservices.map((child) => (
                       <Link
                         key={child.name}
                         to={child.path}
-                        className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
+                        className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
                       >
                         {child.name}
                       </Link>
+                    ))}
+                  </div>
+                )}
+
+                {/* Orthopadic Treatment dropdown */}
+                {item.children && openMenu === item.name && (
+                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-white border hover:text-primary hover:bg-muted border-border shadow-xl">
+                    {item.children.map((child) => (
+                      <div
+                        key={child.name}
+                        className="relative"
+                        onMouseEnter={() => setOpenSubMenu(child.name)}
+                        onMouseLeave={() => setOpenSubMenu(null)}
+                      >
+                        <div className="flex items-center justify-between px-4 py-2 text-sm text-foreground/70 hover:text-primary hover:bg-muted">
+                          {child.name}
+                          {(child.children || child.childrenoforthopadictreatement) && (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
+                        </div>
+
+                        {(child.children || child.childrenoforthopadictreatement) &&
+                          openSubMenu === child.name && (
+                            <div className="absolute top-0 left-full  w-64 py-2 rounded-xl bg-white border border-border shadow-xl">
+                              {(child.children ||
+                                child.childrenoforthopadictreatement).map((sub: any) => (
+                                <Link
+                                  key={sub.name}
+                                  to={sub.path}
+                                  className="block px-4 py-4 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
+                                >
+                                  {sub.name}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                      </div>
                     ))}
                   </div>
                 )}
@@ -97,65 +172,23 @@ const Header = () => {
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:+919480385533" className="flex items-center gap-2 text-sm text-header-foreground/80 hover:text-white transition-colors">
+            <a href="tel:+919480385533" className="flex items-center gap-2 text-sm text-header-foreground/80 hover:text-white">
               <Phone className="w-4 h-4" />
               +91 94803 85533
             </a>
             <Button variant="hero" asChild>
-              <Link to="/contact">Book Consultation</Link>
+              <Link to="/bookconsultation">Book Consultation</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button (UNCHANGED) */}
           <button
-            className="lg:hidden p-2 rounded-lg text-header-foreground hover:bg-white/10 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-header-foreground hover:bg-white/10"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/10">
-            <nav className="flex flex-col gap-2">
-              {navItems.map((item) => (
-                <div key={item.name}>
-                  <Link
-                    to={item.path}
-                    className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(item.path) 
-                        ? "bg-white/15 text-white" 
-                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                  {item.children && (
-                    <div className="ml-4 mt-1 space-y-1">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          to={child.path}
-                          className="block px-4 py-2 text-sm text-header-foreground/70 hover:text-white transition-colors"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <div className="pt-4 px-4">
-                <Button variant="hero" className="w-full" asChild>
-                  <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Book Consultation</Link>
-                </Button>
-              </div>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );
