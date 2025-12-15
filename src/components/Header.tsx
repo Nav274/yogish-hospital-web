@@ -135,12 +135,12 @@ const Header = () => {
 
                 {/* Services dropdown */}
                 {item.childrenofservices && openMenu === item.name && (
-                  <div className="absolute top-full left-0 w-56 py-2 rounded-xl bg-white border border-border shadow-xl">
+                  <div className="absolute top-full left-0 w-56 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
                     {item.childrenofservices.map((child) => (
                       <Link
                         key={child.name}
                         to={child.path}
-                        className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
+                        className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
                       >
                         {child.name}
                       </Link>
@@ -150,7 +150,7 @@ const Header = () => {
 
                 {/* Orthopadic Treatment dropdown */}
                 {item.children && openMenu === item.name && (
-                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-white border border-border shadow-xl">
+                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
                     {item.children.map((child) => (
                       <div
                         key={child.name}
@@ -158,7 +158,7 @@ const Header = () => {
                         onMouseEnter={() => setOpenSubMenu(child.name)}
                         onMouseLeave={() => setOpenSubMenu(null)}
                       >
-                        <div className="flex items-center justify-between px-4 py-2 text-sm text-foreground/70 hover:text-primary hover:bg-muted cursor-pointer">
+                        <div className="flex items-center justify-between px-4 py-2 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10 cursor-pointer">
                           {child.name}
                           {(child.children || child.childrenoforthopadictreatement) && (
                             <ChevronRight className="w-4 h-4" />
@@ -167,12 +167,12 @@ const Header = () => {
 
                         {(child.children || child.childrenoforthopadictreatement) &&
                           openSubMenu === child.name && (
-                            <div className="absolute top-0 left-full w-64 py-2 rounded-xl bg-white border border-border shadow-xl">
+                            <div className="absolute top-0 left-full w-64 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
                               {(child.children || child.childrenoforthopadictreatement)?.map((sub: any) => (
                                 <Link
                                   key={sub.name}
                                   to={sub.path || "#"}
-                                  className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-muted"
+                                  className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
                                 >
                                   {sub.name}
                                 </Link>
