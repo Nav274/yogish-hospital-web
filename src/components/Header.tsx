@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Phone, Menu, X, ChevronDown, ChevronRight, MapPin } from "lucide-react";
+import drYogish from "@/assets/dr-yogish.jpg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,125 +93,163 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-header shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-header-foreground">
-              Dr. Yogish
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center">
-            {navItems.map((item) => (
-              <div
-                key={item.name}
-                className="relative"
-                onMouseEnter={() => setOpenMenu(item.name)}
-                onMouseLeave={() => {
-                  setOpenMenu(null);
-                  setOpenSubMenu(null);
-                }}
-              >
-                {item.childrenofservices || item.children ? (
-                  <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-header-foreground/80 hover:text-white hover:bg-white/10">
-                    {item.name}
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <Link
-                    to={item.path!}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(item.path)
-                        ? "bg-white/15 text-white"
-                        : "text-header-foreground/80 hover:text-white hover:bg-white/10"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-
-                {/* Services dropdown */}
-                {item.childrenofservices && openMenu === item.name && (
-                  <div className="absolute top-full left-0 w-56 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
-                    {item.childrenofservices.map((child) => (
-                      <Link
-                        key={child.name}
-                        to={child.path}
-                        className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
-                      >
-                        {child.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-
-                {/* Orthopadic Treatment dropdown */}
-                {item.children && openMenu === item.name && (
-                  <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
-                    {item.children.map((child) => (
-                      <div
-                        key={child.name}
-                        className="relative"
-                        onMouseEnter={() => setOpenSubMenu(child.name)}
-                        onMouseLeave={() => setOpenSubMenu(null)}
-                      >
-                        <div className="flex items-center justify-between px-4 py-2 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10 cursor-pointer">
-                          {child.name}
-                          {(child.children || child.childrenoforthopadictreatement) && (
-                            <ChevronRight className="w-4 h-4" />
-                          )}
-                        </div>
-
-                        {(child.children || child.childrenoforthopadictreatement) &&
-                          openSubMenu === child.name && (
-                            <div className="absolute top-0 left-full w-64 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
-                              {(child.children || child.childrenoforthopadictreatement)?.map((sub: any) => (
-                                <Link
-                                  key={sub.name}
-                                  to={sub.path || "#"}
-                                  className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
-                                >
-                                  {sub.name}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+    <header className="fixed top-0 left-0 right-0 z-50">
+      {/* Top Header Bar */}
+      <div className="bg-white border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo & Doctor Info */}
+            <Link to="/" className="flex items-center gap-3">
+              <img 
+                src={drYogish} 
+                alt="Dr. Yogish Vijaya Kumar" 
+                className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
+              />
+              <div>
+                <h1 className="text-lg font-bold text-primary">Dr. Yogish Vijaya Kumar</h1>
+                <p className="text-sm text-muted-foreground">Robotic Orthopaedic Surgeon</p>
               </div>
-            ))}
-          </nav>
+            </Link>
 
-          {/* CTA */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:+919480385533" className="flex items-center gap-2 text-sm text-header-foreground/80 hover:text-white">
-              <Phone className="w-4 h-4" />
-              +91 94803 85533
-            </a>
-            <Button variant="hero" asChild>
-              <Link to="/book-consultation">Book Consultation</Link>
-            </Button>
+            {/* Location & Phone - Desktop */}
+            <div className="hidden md:flex items-center gap-8">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <MapPin className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Jayanagar, Bangalore</p>
+                  <p className="text-xs text-muted-foreground">560011</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <a href="tel:+919480375533" className="text-sm font-medium text-foreground hover:text-primary">
+                    +91 94803 75533
+                  </a>
+                  <p className="text-xs text-muted-foreground">24/7 Customer Support</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-lg text-foreground hover:bg-muted"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+        </div>
+      </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 rounded-lg text-header-foreground hover:bg-white/10"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+      {/* Navigation Bar */}
+      <div className="bg-header shadow-lg">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-12">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center">
+              {navItems.map((item) => (
+                <div
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => setOpenMenu(item.name)}
+                  onMouseLeave={() => {
+                    setOpenMenu(null);
+                    setOpenSubMenu(null);
+                  }}
+                >
+                  {item.childrenofservices || item.children ? (
+                    <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-header-foreground/80 hover:text-white hover:bg-white/10">
+                      {item.name}
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <Link
+                      to={item.path!}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        isActive(item.path)
+                          ? "bg-white/15 text-white"
+                          : "text-header-foreground/80 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+
+                  {/* Services dropdown */}
+                  {item.childrenofservices && openMenu === item.name && (
+                    <div className="absolute top-full left-0 w-56 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
+                      {item.childrenofservices.map((child) => (
+                        <Link
+                          key={child.name}
+                          to={child.path}
+                          className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Orthopadic Treatment dropdown */}
+                  {item.children && openMenu === item.name && (
+                    <div className="absolute top-full left-0 w-72 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
+                      {item.children.map((child) => (
+                        <div
+                          key={child.name}
+                          className="relative"
+                          onMouseEnter={() => setOpenSubMenu(child.name)}
+                          onMouseLeave={() => setOpenSubMenu(null)}
+                        >
+                          <div className="flex items-center justify-between px-4 py-2 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10 cursor-pointer">
+                            {child.name}
+                            {(child.children || child.childrenoforthopadictreatement) && (
+                              <ChevronRight className="w-4 h-4" />
+                            )}
+                          </div>
+
+                          {(child.children || child.childrenoforthopadictreatement) &&
+                            openSubMenu === child.name && (
+                              <div className="absolute top-0 left-full w-64 py-2 rounded-xl bg-header border border-white/20 shadow-xl">
+                                {(child.children || child.childrenoforthopadictreatement)?.map((sub: any) => (
+                                  <Link
+                                    key={sub.name}
+                                    to={sub.path || "#"}
+                                    className="block px-4 py-2.5 text-sm text-header-foreground/80 hover:text-white hover:bg-white/10"
+                                  >
+                                    {sub.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            {/* CTA - Desktop */}
+            <div className="hidden lg:flex items-center">
+              <Button variant="hero" asChild>
+                <Link to="/book-consultation">Appointment</Link>
+              </Button>
+            </div>
+
+            {/* Mobile - just show nav bar branding on mobile */}
+            <span className="lg:hidden text-sm font-medium text-header-foreground">Menu</span>
+          </div>
         </div>
       </div>
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 right-0 bg-white border-t border-border shadow-xl max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="lg:hidden absolute top-32 left-0 right-0 bg-white border-t border-border shadow-xl max-h-[calc(100vh-8rem)] overflow-y-auto">
           <nav className="py-4">
             {navItems.map((item) => (
               <div key={item.name}>
