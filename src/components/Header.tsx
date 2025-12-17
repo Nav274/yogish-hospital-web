@@ -149,7 +149,7 @@ const Header = () => {
       {/* Navigation Bar */}
       <div className="bg-header shadow-lg">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-12">
+          <div className="flex items-center justify-center h-12 relative">
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center">
               {navItems.map((item) => (
@@ -235,7 +235,7 @@ const Header = () => {
             </nav>
 
             {/* CTA - Desktop */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden lg:flex items-center absolute right-4">
               <Button variant="hero" asChild>
                 <Link to="/book-consultation">Appointment</Link>
               </Button>
